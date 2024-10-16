@@ -1,4 +1,4 @@
-# EXPERIMENT--07-SQUARE-WAVE-GENERATION-AT-THE-OUTPUT-PIN-USING-TIMER
+# EXPERIMENT--06-SQUARE-WAVE-GENERATION-AT-THE-OUTPUT-PIN-USING-TIMER
 
 ### Aim:
 To generate a PWM wave at the timer pin output and  simuate it on  proteus using an virtual oscilloscope  
@@ -90,36 +90,30 @@ Step10. Double click on the the MCU part to open settings. Next to the Program F
 Step14. click on debug and simulate using simulation as shown below 
  ![image](https://github.com/vasanthkumarch/EXPERIMENT--07-SQUARE-WAVE-GENERATION-AT-THE-OUTPUT-PIN-USING-TIMER/assets/36288975/b8efbfc2-f0c5-4106-8117-3a6e7ac87f6c)
 
-
- 
-
-  
+## Developed By: KUMARTEJA NARAMALA
+## Register no: 212223230132
 
 ## STM 32 CUBE PROGRAM :
 ```
+
 #include "main.h"
 TIM_HandleTypeDef htim2;
-
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
+
 int main(void)
 {
+  
   HAL_Init();
   SystemClock_Config();
-
   MX_GPIO_Init();
   MX_TIM2_Init();
-
-
-	  HAL_TIM_Base_Start(&htim2);
-	  HAL_TIM_PWM_Init(&htim2);
-	  HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
-
-
+  HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_PWM_Init(&htim2);
+  HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
   while (1)
   {
-
   }
 
 }
@@ -128,10 +122,6 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
-
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -184,25 +174,23 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 500;
+  sConfigOC.Pulse =700;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
+
   HAL_TIM_MspPostInit(&htim2);
 
 }
-
 static void MX_GPIO_Init(void)
 {
 
+  /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
-
 }
-
-
 void Error_Handler(void)
 {
   __disable_irq();
@@ -212,56 +200,54 @@ void Error_Handler(void)
 }
 
 #ifdef  USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+  
 }
 #endif /* USE_FULL_ASSERT */
-```
-## Output screen shots of proteus  :
-![image](https://github.com/user-attachments/assets/7b6b7ca2-e670-486d-b382-ada5f5d2bbb8)
 
+
+```
+
+## Output screen shots of proteus  :
+
+ ![Screenshot 2024-10-09 105149](https://github.com/user-attachments/assets/118a985d-6007-482f-985c-3fc0c2e34252)
+
+ ![Screenshot 2024-10-09 105053](https://github.com/user-attachments/assets/93eda27e-88bb-4e0b-be56-16c7a3400654)
+
+![Screenshot 2024-10-09 105419](https://github.com/user-attachments/assets/0bc0b13c-8fed-4124-9e0e-783ecdd6e4ce)
+
+![Screenshot 2024-10-09 105456](https://github.com/user-attachments/assets/6a06d058-2cd9-46df-839a-46ee6f83c07e)
+
+ 
  ## CIRCUIT DIAGRAM (EXPORT THE GRAPHICS TO PDF AND ADD THE SCREEN SHOT HERE): 
- ![image](https://github.com/user-attachments/assets/6033c439-0788-46f5-a537-d32dcad23f52)
+
+ ![image](https://github.com/user-attachments/assets/d0d5d005-4949-44d7-ad0b-2901145cfbcd)
+
 
 ## DUTY CYCLE AND FREQUENCY CALCULATION 
+
 FOR PULSE AT 500
 
-TON = 2ms
-TOFF= 2ms
-TOTAL TIME = 4ms
-FREQUENCY = 1/(TOTAL TIME)=1/4=250 Hz
-![image](https://github.com/user-attachments/assets/720e63b5-2362-4c25-b5ec-d71d2aa0a45a)
+TON = 2.5ms
+TOFF=2.5mus
+TOTAL TIME = 5ms
+FREQUENCY = 1/(5*10^-3)= 200Hz
+
+FOR PULSE AT 600
+
+TON = 3ms
+TOFF= 2mus
+TOTAL TIME = 5ms
+FREQUENCY = 1/(TOTAL TIME)=200Hz
 
 FOR PULSE AT 700
 
-TON = 
-TOFF=
-TOTAL TIME = 
-FREQUENCY = 1/(TOTAL TIME)
-
-
-FOR PULSE AT 900
-
-TON = 
-TOFF=
-TOTAL TIME = 
-FREQUENCY = 1/(TOTAL TIME)
-
+TON = 3.5ms
+TOFF=1.5mus
+TOTAL TIME = 5ms
+FREQUENCY = 1/(TOTAL TIME)=200Hz
 
 ## Result :
 A PWM Signal is generated using the following frequency and various duty cycles are simulated 
-
-
-
 
